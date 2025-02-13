@@ -3,6 +3,7 @@
 Example usage:
     python extract_img_embs.py
 """
+
 import torch
 from fromage import models, utils
 
@@ -13,7 +14,9 @@ from io import BytesIO
 import pickle as pkl
 
 
-def extract_embeddings_for_urls(image_urls: list[str], emb_output_path: str, device: str = "cuda"):
+def extract_embeddings_for_urls(
+    image_urls: list[str], emb_output_path: str, device: str = "cuda"
+):
     # Load model checkpoint.
     model = models.load_fromage("./fromage_model/")
     model.eval()
@@ -34,7 +37,7 @@ def extract_embeddings_for_urls(image_urls: list[str], emb_output_path: str, dev
             img_emb = img_emb[0, 0, :].cpu()
             output_data["paths"].append(img_url)
             output_data["embeddings"].append(img_emb)
-    
+
     with open(emb_output_path, "wb") as f:
         pkl.dump(output_data, f)
 
