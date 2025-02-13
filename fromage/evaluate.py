@@ -15,12 +15,12 @@ from fromage import losses as losses_utils
 from fromage import utils
 
 
-def validate(val_loader, model, tokenizer, criterion, epoch, args):
+def validate(val_loader, model, tokenizer, criterion, epoch, model_modes, args):
     ngpus_per_node = torch.cuda.device_count()
     writer = SummaryWriter(args.log_dir)
     bleu_scorers = [BLEUScore(n_gram=i) for i in [1, 2, 3, 4]]
     actual_step = (epoch + 1) * args.steps_per_epoch
-    model_modes = ["captioning", "retrieval"]
+    # model_modes = ["captioning", "retrieval"]
     num_words = 32  # Number of tokens to generate.
 
     feature_extractor = utils.get_feature_extractor_for_model(
